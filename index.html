@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>프롬프트 작성방법 카드형 교재</title>
+  <style>
+    :root{
+      --bg:#f5f5f7; --card:#ffffff; --text:#1d1d1f; --muted:#6e6e73;
+      --line:#d2d2d7; --accent:#007aff; --accent2:#34c759; --code:#f2f2f7;
+      --shadow:0 18px 45px rgba(0,0,0,.08);
+      --radius:26px;
+    }
+    body.spotify{
+      --bg:#0b0f0d; --card:#121a15; --text:#f5fff8; --muted:#b6c4ba;
+      --line:#24352a; --accent:#1DB954; --accent2:#1ed760; --code:#18231c;
+      --shadow:0 18px 45px rgba(29,185,84,.15);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.75;word-break:keep-all}
+    header{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%, transparent);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+    .nav{max-width:1120px;margin:0 auto;padding:14px 18px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+    .brand{font-weight:900;letter-spacing:-.03em;font-size:18px}
+    .menu{display:flex;gap:8px;flex-wrap:wrap}
+    .menu a,.theme button{border:1px solid var(--line);background:var(--card);color:var(--text);text-decoration:none;border-radius:999px;padding:9px 13px;font-size:14px;font-weight:800;box-shadow:0 4px 14px rgba(0,0,0,.04)}
+    .theme{display:flex;gap:8px}
+    .theme button{cursor:pointer}
+    .theme button.active{background:var(--accent);color:white;border-color:var(--accent)}
+    main{max-width:1120px;margin:0 auto;padding:28px 18px 80px}
+    .hero{border-radius:34px;background:linear-gradient(135deg,var(--card),color-mix(in srgb,var(--accent) 12%,var(--card)));padding:34px 24px;box-shadow:var(--shadow);border:1px solid var(--line);margin-bottom:22px}
+    .hero h1{font-size:clamp(30px,6vw,56px);line-height:1.12;margin:0 0 12px;letter-spacing:-.05em}
+    .hero p{font-size:18px;color:var(--muted);margin:0}
+    section{padding-top:78px;margin-top:-48px}
+    .part-title{display:flex;align-items:center;gap:12px;margin:34px 0 18px}
+    .part-title h2{font-size:clamp(26px,5vw,42px);margin:0;letter-spacing:-.04em}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+    .wide{grid-column:1/-1}
+    h3{font-size:23px;margin:0 0 12px;letter-spacing:-.03em}
+    h4{font-size:18px;margin:22px 0 8px}
+    p{margin:8px 0}
+    ul{margin:8px 0 0;padding-left:22px}
+    li{margin:5px 0}
+    .note{color:var(--muted)}
+    .prompt{position:relative;background:var(--code);border:1px solid var(--line);border-radius:18px;padding:18px 54px 18px 18px;white-space:pre-wrap;font-size:16px;line-height:1.7;margin-top:10px}
+    .prompt::before{content:"text";display:block;color:var(--muted);font-size:13px;margin-bottom:6px}
+    .copy{position:absolute;right:12px;top:12px;border:0;border-radius:12px;background:var(--card);color:var(--text);padding:7px 10px;cursor:pointer;border:1px solid var(--line)}
+    .divider{height:1px;background:var(--line);margin:22px 0}
+    .tag{display:inline-block;background:color-mix(in srgb,var(--accent) 15%,transparent);color:var(--accent);border-radius:999px;padding:4px 10px;font-weight:900;font-size:13px;margin-bottom:10px}
+    @media(max-width:760px){
+      .grid{grid-template-columns:1fr}
+      .nav{align-items:flex-start}
+      .menu{width:100%;overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px}
+      .menu a{white-space:nowrap}
+      .hero{padding:26px 18px}
+      .card{padding:19px}
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="nav">
+    <div class="brand">🎬 프롬프트 작성방법</div>
+    <nav class="menu">
+      <a href="#part1">Part 1 프롬프트</a>
+      <a href="#part2">Part 2 이미지</a>
+      <a href="#part3">Part 3 동영상</a>
+    </nav>
+    <div class="theme">
+      <button id="appleBtn" class="active" onclick="setTheme('apple')">🍎 애플</button>
+      <button id="spotifyBtn" onclick="setTheme('spotify')">🎧 스포티파이</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <h1>AI 이미지·영상 생성 프롬프트 카드형 교재</h1>
+    <p>원본 내용을 유지하여 Part 1 프롬프트 용어, Part 2 이미지 생성, Part 3 동영상 생성으로 구성했습니다.</p>
+  </div>
+
+  <section id="part1">
+    <div class="part-title"><span class="tag">part 1</span><h2>[프롬프트 용어]</h2></div>
+    <div class="grid">
+      <div class="card wide">
+        <p>영상 생성 AI나 이미지 생성 AI에서 시네마틱한 결과물을 만들기 위해 자주 사용하는 핵심 프롬프트 구조입니다.</p>
+        <p>특히 Flow, Sora 계열, , , 등에서 매우 자주 활용됩니다.</p>
+        <p>아래 내용을 그대로 “프롬프트 사전”처럼 활용하시면 됩니다.</p>
+      </div>
+
+      <div class="card">
+        <h3>🎬 1. 카메라 움직임(Camera Movement) 프롬프트</h3>
+        <p>카메라 움직임은 영상의 감정과 몰입도를 결정합니다.</p>
+        <h4>📌 기본 이동</h4>
+        <ul>
+          <li>slow dolly in<br>→ 천천히 피사체 쪽으로 이동</li>
+          <li>slow dolly out<br>→ 천천히 뒤로 빠짐</li>
+          <li>cinematic tracking shot<br>→ 피사체를 따라가는 영화식 이동</li>
+          <li>handheld camera movement<br>→ 손으로 촬영한 듯한 현실감</li>
+          <li>smooth steadycam shot<br>→ 부드러운 짐벌 촬영 느낌</li>
+          <li>slow pan left/right<br>→ 좌우 천천히 회전</li>
+          <li>tilt up/down<br>→ 위아래 시선 이동</li>
+          <li>orbit camera shot<br>→ 피사체 중심 회전</li>
+          <li>drone aerial shot<br>→ 드론 항공 촬영</li>
+          <li>push-in cinematic shot<br>→ 감정을 강조하는 전진 샷</li>
+        </ul>
+        <div class="divider"></div>
+        <h4>📌 고급 감성 표현</h4>
+        <ul>
+          <li>floating cinematic camera</li>
+          <li>immersive camera movement</li>
+          <li>emotional cinematic motion</li>
+          <li>dynamic action tracking</li>
+          <li>documentary style movement</li>
+          <li>realistic camera shake</li>
+          <li>ultra smooth motion</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>💡 2. 조명을 이용한 최적의 무드 설정</h3>
+        <p>조명은 “감정”을 만듭니다.</p>
+        <h4>🌅 따뜻한 감성</h4>
+        <ul><li>warm cinematic lighting</li><li>golden hour lighting</li><li>sunset glow</li><li>soft amber light</li><li>cozy atmosphere</li><li>warm indoor lamp lighting</li></ul>
+        <p>👉 감성 브이로그 / 힐링 영상</p>
+        <div class="divider"></div>
+        <h4>🌃 차가운 분위기</h4>
+        <ul><li>moody blue lighting</li><li>cold cinematic tone</li><li>neon blue atmosphere</li><li>cyberpunk lighting</li><li>rainy night lighting</li></ul>
+        <p>👉 SF / 미래도시 / 고독한 분위기</p>
+        <div class="divider"></div>
+        <h4>🎞 영화 느낌</h4>
+        <ul><li>volumetric lighting</li><li>dramatic shadows</li><li>high contrast lighting</li><li>studio softbox lighting</li><li>cinematic backlight</li><li>god rays</li></ul>
+        <p>👉 고급 영화 무드</p>
+        <div class="divider"></div>
+        <h4>🌫 안개·몽환 표현</h4>
+        <ul><li>dreamy haze</li><li>foggy atmosphere</li><li>cinematic mist</li><li>ethereal glow</li><li>soft bloom lighting</li></ul>
+      </div>
+
+      <div class="card">
+        <h3>🧱 3. 질감(Texture) 요소 추가 프롬프트</h3>
+        <p>질감은 AI 이미지의 “현실감”을 크게 올려줍니다.</p>
+        <h4>📷 필름 감성</h4>
+        <ul><li>film grain</li><li>analog texture</li><li>vintage film look</li><li>Kodak cinematic texture</li><li>35mm film texture</li></ul>
+        <h4>🌧 환경 질감</h4>
+        <ul><li>wet surface reflections</li><li>rain droplets</li><li>dusty atmosphere</li><li>smoke particles</li><li>floating dust</li><li>snow particles</li></ul>
+        <h4>🧵 재질 표현</h4>
+        <ul><li>realistic skin texture</li><li>fabric details</li><li>metallic reflections</li><li>glossy surface</li><li>rough concrete texture</li><li>detailed wood grain</li></ul>
+        <h4>✨ 고급 디테일</h4>
+        <ul><li>ultra detailed texture</li><li>hyper realistic surface</li><li>cinematic realism</li><li>tactile realism</li></ul>
+      </div>
+
+      <div class="card">
+        <h3>📸 4. 올바른 렌즈 선택 프롬프트</h3>
+        <p>렌즈는 공간감과 감정을 바꿉니다.</p>
+        <h4>👤 인물 촬영</h4>
+        <p><b>50mm Lens</b></p>
+        <ul><li>natural perspective</li><li>cinematic portrait</li></ul>
+        <p>👉 가장 자연스러운 인물</p>
+        <p><b>85mm Lens</b></p>
+        <ul><li>shallow depth of field</li><li>creamy bokeh</li></ul>
+        <p>👉 광고·화보 스타일</p>
+        <h4>🌄 풍경 촬영</h4>
+        <p><b>24mm Lens</b></p>
+        <ul><li>wide cinematic landscape</li><li>immersive environment</li></ul>
+        <p>👉 웅장한 공간감</p>
+        <p><b>16mm Ultra Wide</b></p>
+        <ul><li>epic perspective</li><li>dramatic wide angle</li></ul>
+        <p>👉 강렬한 원근감</p>
+        <h4>🎬 영화 느낌</h4>
+        <ul><li>anamorphic lens</li><li>cinematic lens flare</li><li>oval bokeh</li><li>IMAX style lens</li><li>shallow DOF</li></ul>
+      </div>
+
+      <div class="card">
+        <h3>🎥 5. 의도적 샷 각도(Shot Angle) 조정</h3>
+        <p>샷 각도는 캐릭터의 감정과 권력을 표현합니다.</p>
+        <h4>🔽 로우 앵글 (강한 느낌)</h4>
+        <ul><li>low angle shot</li><li>heroic perspective</li><li>powerful composition</li></ul>
+        <p>👉 영웅적 / 강인함</p>
+        <h4>🔼 하이 앵글 (약한 느낌)</h4>
+        <ul><li>high angle shot</li><li>vulnerable perspective</li></ul>
+        <p>👉 외로움 / 약함</p>
+        <h4>👁 시네마틱 구도</h4>
+        <ul><li>over the shoulder shot</li><li>centered composition</li><li>symmetrical framing</li><li>rule of thirds</li><li>cinematic close-up</li><li>extreme close-up</li></ul>
+        <h4>🎞 감정 강조</h4>
+        <ul><li>intimate framing</li><li>emotional close-up</li><li>dramatic composition</li><li>tension-filled angle</li></ul>
+      </div>
+
+      <div class="card">
+        <h3>🔥 실전 조합 예시</h3>
+        <h4>🌃 미래도시 여성 모델</h4>
+        <div class="prompt">A beautiful Korean woman walking through a futuristic Seoul street at night,
+cinematic tracking shot,
+anamorphic lens,
+moody neon blue lighting,
+wet asphalt reflections,
+volumetric fog,
+film grain,
+slow dolly in,
+shallow depth of field,
+dramatic cinematic atmosphere,
+ultra realistic skin texture<button class="copy" onclick="copyPrompt(this)">복사</button></div>
+        <h4>🌅 감성 브이로그 느낌</h4>
+        <div class="prompt">Young Korean woman sitting near a window cafe,
+golden hour lighting,
+warm cinematic tone,
+50mm lens,
+soft handheld camera movement,
+cozy atmosphere,
+film texture,
+dust particles floating in sunlight,
+dreamy mood<button class="copy" onclick="copyPrompt(this)">복사</button></div>
+      </div>
+
+      <div class="card">
+        <h3>📌 가장 많이 사용하는 핵심 조합</h3>
+        <p>실무에서는 아래 조합이 매우 강력합니다.</p>
+        <div class="prompt">cinematic lighting
+volumetric light
+film grain
+anamorphic lens
+shallow depth of field
+cinematic camera movement
+ultra realistic texture
+dramatic composition<button class="copy" onclick="copyPrompt(this)">복사</button></div>
+        <p>이 조합만 넣어도 AI 영상 품질이 크게 향상됩니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="part2">
+    <div class="part-title"><span class="tag">part 2</span><h2>🖼 AI 이미지 생성 프롬프트 사례집</h2></div>
+    <div class="grid">
+      <div class="card wide">
+        <h3>“채팅창에 쉽게 입력하는 감성 이미지 프롬프트”</h3>
+        <p>AI 이미지 생성은 복잡한 영어 전문 용어보다도 아래처럼 자연스럽게 설명하는 방식이 훨씬 쉽고 효과적입니다.</p>
+        <p>예를 들면: “노을빛 감성” “영화 포스터 느낌” “따뜻한 카페 분위기” “고급 화장품 광고 스타일”</p>
+        <p>같은 표현만으로도 AI는 조명·카메라·질감·렌즈 느낌을 자동으로 해석합니다.</p>
+      </div>
+
+      <div class="card"><h3>🌿 1. 감성 카페 사진 스타일</h3><div class="prompt">창가 카페에 앉아 있는 한국 여성,
+따뜻한 햇살이 들어오고,
+커피잔에서 김이 올라오며,
+배경은 살짝 흐려지고,
+영화 같은 감성 분위기,
+따뜻하고 편안한 느낌,
+고급 화보 스타일<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🌃 2. 비 오는 밤 감성</h3><div class="prompt">비 오는 서울 밤거리,
+젖은 도로에 네온사인이 반사되고,
+우산을 쓴 여성이 서 있는 모습,
+조금 어둡고 감성적인 분위기,
+영화 포스터 같은 느낌,
+고급스럽고 세련된 스타일<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🌅 3. 노을 바다 인생샷</h3><div class="prompt">노을지는 바닷가에 서 있는 남성,
+주황빛 햇살이 비치고,
+바람에 옷과 머리카락이 자연스럽게 흔들리며,
+감성 영화 같은 분위기,
+따뜻하고 힐링되는 느낌<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🎤 4. K-pop 아이돌 화보 스타일</h3><div class="prompt">화려한 조명 아래 서 있는 한국 여성 아이돌,
+반짝이는 무대 배경,
+세련된 메이크업과 스타일링,
+뮤직비디오 같은 분위기,
+고급 패션 화보 느낌<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🏔 5. 자연 다큐 느낌</h3><div class="prompt">안개 낀 산과 넓은 초원,
+햇빛이 구름 사이로 내려오고,
+웅장하고 신비로운 분위기,
+자연 다큐멘터리 같은 느낌,
+고해상도 풍경 사진 스타일<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>👑 6. 영화 주인공 스타일</h3><div class="prompt">검은 코트를 입은 남성이 어두운 골목에 서 있는 모습,
+뒤에서 강한 빛이 비치고,
+긴장감 있는 분위기,
+영화 포스터 같은 느낌,
+강렬하고 카리스마 있는 스타일<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🌸 7. 한국 드라마 첫사랑 감성</h3><div class="prompt">벚꽃길 아래 마주보는 남녀,
+벚꽃잎이 흩날리고,
+따뜻한 햇살이 비치며,
+설레고 감성적인 분위기,
+한국 드라마 포스터 느낌<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🚗 8. 자동차 광고 스타일</h3><div class="prompt">검은 스포츠카가 비 오는 도로 위에 서 있는 모습,
+도로에 불빛이 반사되고,
+강렬하고 세련된 분위기,
+고급 자동차 광고 같은 느낌<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🌌 9. 몽환적인 판타지 스타일</h3><div class="prompt">별빛이 가득한 밤하늘 아래 서 있는 여성,
+주변에 작은 빛 입자들이 떠다니고,
+신비롭고 몽환적인 분위기,
+판타지 영화 포스터 느낌<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🌲 10. 숲속 힐링 감성</h3><div class="prompt">푸른 숲속을 걷는 여성,
+햇빛이 나뭇잎 사이로 비치고,
+맑고 깨끗한 분위기,
+힐링 영화 같은 느낌,
+자연스럽고 편안한 스타일<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🕯 11. 겨울 감성 사진</h3><div class="prompt">눈 내리는 겨울 밤,
+창문 옆에서 따뜻한 차를 마시는 여성,
+주황빛 조명이 은은하게 비치고,
+포근하고 조용한 분위기,
+감성 화보 스타일<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🏍 12. 바이크 감성 스타일</h3><div class="prompt">밤거리를 달리는 바이크와 라이더,
+도시의 네온 불빛이 반짝이고,
+강렬하고 자유로운 분위기,
+액션 영화 포스터 느낌<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🎡 13. 놀이공원 감성</h3><div class="prompt">밤의 놀이공원,
+회전목마와 조명이 반짝이고,
+웃고 있는 커플 모습,
+동화 같은 분위기,
+따뜻하고 행복한 느낌<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🌧 14. 창문 빗방울 감성</h3><div class="prompt">창문에 빗방울이 흐르고,
+창밖 도시 불빛이 흐릿하게 보이는 장면,
+조용하고 감성적인 분위기,
+영화 한 장면 같은 느낌<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🧑‍🍳 15. 요리 브이로그 스타일</h3><div class="prompt">따뜻한 주방에서 요리하는 여성,
+햇살이 부드럽게 들어오고,
+음식에서 김이 올라오는 모습,
+감성 유튜브 브이로그 같은 분위기<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🌃 16. 미래 도시 SF 스타일</h3><div class="prompt">미래 도시의 높은 빌딩과 네온 조명,
+공중에 홀로그램 광고가 떠다니고,
+SF 영화 같은 분위기,
+푸른빛 미래 도시 스타일<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🌻 17. 시골 감성 다큐 스타일</h3><div class="prompt">노란 꽃밭 사이를 걷는 할머니,
+햇빛이 따뜻하게 비치고,
+평화롭고 따뜻한 분위기,
+다큐멘터리 사진 같은 느낌<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>💄 18. 고급 화장품 광고 스타일</h3><div class="prompt">고급 화장품 병이 대리석 위에 놓여 있고,
+부드러운 조명이 비치며,
+물방울과 반짝이는 빛 효과,
+럭셔리 화장품 광고 같은 분위기,
+세련되고 깨끗한 스타일<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>👗 19. 패션 잡지 화보 스타일</h3><div class="prompt">세련된 옷을 입은 한국 여성 모델,
+스튜디오 조명,
+고급 패션 잡지 같은 분위기,
+깔끔하고 현대적인 스타일,
+럭셔리 화보 느낌<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🐈 20. 귀여운 고양이 감성 스타일</h3><div class="prompt">햇빛이 들어오는 창가에 앉아 있는 고양이,
+따뜻하고 포근한 분위기,
+털이 부드럽게 표현되고,
+감성 사진 같은 느낌<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card wide"><h3>🔥 초보자용 가장 쉬운 이미지 생성 공식</h3><p>AI 이미지 생성은 아래 구조만 기억해도 충분합니다.</p><div class="prompt">무엇을 찍는지
++
+빛 분위기
++
+배경 느낌
++
+감정 분위기<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>📌 예시</h3><div class="prompt">노을지는 바닷가에 서 있는 여성,
+따뜻한 햇빛이 비치고,
+배경은 부드럽게 흐려지며,
+감성 영화 같은 분위기<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🎨 일반인이 자주 사용하는 표현 모음</h3><h4>💡 조명 표현</h4><ul><li>따뜻한 햇살 느낌</li><li>영화 같은 조명</li><li>노을 감성</li><li>네온사인 느낌</li><li>몽환적인 빛</li><li>부드러운 조명</li></ul><h4>🌫 분위기 표현</h4><ul><li>감성적인 분위기</li><li>영화 포스터 느낌</li><li>고급 광고 느낌</li><li>따뜻하고 편안한 느낌</li><li>신비롭고 몽환적인 분위기</li><li>세련된 분위기</li></ul></div>
+      <div class="card wide"><h3>📌 핵심 정리</h3><p>AI는 아래 4가지를 특히 중요하게 인식합니다.</p><div class="prompt">장면
++
+빛
++
+배경
++
+감정<button class="copy" onclick="copyPrompt(this)">복사</button></div><p>이 4가지만 자연스럽게 적어도 이미지 품질이 훨씬 좋아집니다.</p></div>
+    </div>
+  </section>
+
+  <section id="part3">
+    <div class="part-title"><span class="tag">part 3</span><h2>🎬 AI동영상 생성 프롬프트</h2></div>
+    <div class="grid">
+      <div class="card wide">
+        <h3>“쉽게 채팅창에 입력하는 감성 프롬프트 모음”</h3>
+        <p>AI 영상 생성에서는 전문 용어보다도 아래처럼 자연스럽게 입력하는 방식이 훨씬 효과적입니다.</p>
+        <p>“비 오는 밤 감성” “영화처럼 천천히 다가오는 화면” “따뜻한 햇살 느낌”</p>
+        <p>같은 표현만으로도 AI는 카메라 움직임·조명·질감·렌즈 느낌을 자동으로 해석합니다.</p>
+      </div>
+
+      <div class="card"><h3>🌿 1. 감성 카페 브이로그 스타일</h3><div class="prompt">창가 카페에 앉아 있는 한국 여성,
+햇살이 따뜻하게 들어오고,
+먼지가 햇빛에 반짝이는 느낌,
+카메라가 천천히 앞으로 다가오며,
+영화 같은 감성 분위기,
+배경은 살짝 흐려지고,
+편안하고 따뜻한 느낌<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🌃 2. 비 오는 도시 감성</h3><div class="prompt">비 오는 서울 밤거리,
+젖은 도로에 네온사인이 반사되고,
+우산 쓴 여성이 천천히 걷는 모습,
+카메라가 옆에서 따라가며,
+조금 어둡고 감성적인 분위기,
+영화 같은 장면<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🌅 3. 노을 바다 감성</h3><div class="prompt">노을지는 바닷가를 걷는 남성,
+바람에 머리카락과 옷이 자연스럽게 흔들리고,
+카메라가 뒤에서 천천히 따라가며,
+따뜻한 주황빛 햇살,
+감성 영화 느낌,
+잔잔하고 힐링되는 분위기<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🎤 4. K-pop 뮤직비디오 느낌</h3><div class="prompt">무대 위에서 노래하는 한국 여성 아이돌,
+화려한 조명과 반짝이는 배경,
+카메라가 빠르게 움직이며,
+댄스 장면이 역동적으로 보이고,
+뮤직비디오 같은 화려한 분위기,
+고급스럽고 세련된 느낌<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🏔 5. 웅장한 자연 다큐 느낌</h3><div class="prompt">높은 산과 넓은 초원을 드론으로 촬영하는 장면,
+안개가 천천히 움직이고,
+햇빛이 구름 사이로 내려오며,
+웅장하고 신비로운 분위기,
+자연 다큐멘터리 같은 느낌<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>👑 6. 영화 주인공 등장 장면</h3><div class="prompt">검은 코트를 입은 남성이 어두운 골목에서 걸어나오는 장면,
+카메라가 아래쪽에서 올려다보며,
+뒤쪽 조명이 강하게 비치고,
+천천히 긴장감 있게 다가오는 화면,
+영화 주인공 같은 분위기<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🌸 7. 드라마 첫사랑 감성</h3><div class="prompt">벚꽃길 아래에서 서로 마주보는 남녀,
+벚꽃잎이 천천히 날리고,
+카메라가 부드럽게 회전하며,
+따뜻하고 설레는 분위기,
+한국 드라마 같은 감성<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🚗 8. 자동차 광고 느낌</h3><div class="prompt">검은 스포츠카가 비 오는 도로를 달리는 장면,
+도로에 불빛이 반사되고,
+카메라가 낮은 위치에서 빠르게 따라가며,
+고급 자동차 광고 같은 분위기,
+강렬하고 세련된 느낌<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🌌 9. 몽환적인 판타지 느낌</h3><div class="prompt">별빛이 가득한 밤하늘 아래 서 있는 여성,
+주변에 작은 빛 입자들이 떠다니고,
+카메라가 천천히 회전하며,
+꿈속 같은 몽환적인 분위기,
+신비롭고 아름다운 느낌<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🎬 10. 감성 한강 산책</h3><div class="prompt">한강을 걷는 여성,
+노을빛이 따뜻하게 비치고,
+카메라가 천천히 따라가며,
+감성 영화 같은 분위기,
+조용하고 편안한 느낌<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🌲 11. 숲속 힐링 장면</h3><div class="prompt">푸른 숲속을 천천히 걷는 여성,
+나뭇잎 사이로 햇빛이 비치고,
+바람에 머리카락이 자연스럽게 흔들리며,
+카메라가 부드럽게 따라가는 장면,
+맑고 힐링되는 분위기<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🚆 12. 기차역 이별 장면</h3><div class="prompt">비 오는 기차역 플랫폼,
+떠나는 기차를 바라보는 남성,
+카메라가 천천히 뒤로 멀어지며,
+슬프고 감성적인 분위기,
+영화 엔딩 같은 느낌<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🕯 13. 따뜻한 겨울 감성</h3><div class="prompt">눈 내리는 겨울 밤,
+창문 옆에서 따뜻한 커피를 마시는 여성,
+주황빛 조명이 은은하게 비치고,
+창밖에는 눈이 천천히 내리는 모습,
+포근하고 조용한 분위기<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🌊 14. 드론 바다 여행 영상</h3><div class="prompt">푸른 바다 위를 드론으로 천천히 날아가는 장면,
+햇빛이 물결에 반짝이고,
+작은 배가 천천히 지나가며,
+시원하고 자유로운 분위기,
+여행 다큐 느낌<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🏍 15. 바이크 질주 장면</h3><div class="prompt">밤거리를 달리는 바이크,
+도시의 네온 불빛이 빠르게 지나가고,
+카메라가 옆에서 속도감 있게 따라가며,
+강렬하고 자유로운 분위기,
+액션 영화 느낌<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🎡 16. 놀이공원 감성</h3><div class="prompt">밤의 놀이공원,
+회전목마와 조명이 반짝이고,
+웃으며 걷는 커플,
+카메라가 천천히 회전하며,
+동화 같은 분위기,
+따뜻하고 행복한 느낌<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🌧 17. 창문 빗방울 감성</h3><div class="prompt">창문에 빗방울이 흐르는 장면,
+창밖 도시 불빛이 흐릿하게 보이고,
+잔잔한 음악이 들릴 것 같은 분위기,
+카메라가 천천히 창문 쪽으로 다가가며,
+감성 영화 느낌<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🧑‍🍳 18. 요리 브이로그 스타일</h3><div class="prompt">따뜻한 주방에서 요리하는 여성,
+햇살이 부드럽게 들어오고,
+음식에서 김이 올라오는 모습,
+카메라가 손동작을 가까이 따라가며,
+감성 유튜브 브이로그 느낌<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🌃 19. 미래 도시 SF 분위기</h3><div class="prompt">미래 도시의 높은 빌딩 사이를 걷는 남성,
+푸른 네온 조명이 도시를 비추고,
+공중에는 홀로그램 광고가 떠다니며,
+카메라가 영화처럼 천천히 이동하는 장면,
+SF 영화 같은 분위기<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🌻 20. 시골 감성 다큐 스타일</h3><div class="prompt">노란 꽃밭 사이를 걷는 할머니,
+바람에 꽃이 천천히 흔들리고,
+햇빛이 따뜻하게 비치며,
+카메라가 멀리서 조용히 따라가는 장면,
+다큐멘터리 같은 따뜻한 분위기<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card wide"><h3>🔥 초보자용 가장 쉬운 공식</h3><p>AI 영상 생성은 아래 구조만 기억해도 됩니다.</p><div class="prompt">누가 무엇을 하는지
++
+빛 분위기
++
+카메라 움직임
++
+감정 느낌<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>📌 예시</h3><div class="prompt">노을지는 바닷가를 걷는 여성,
+따뜻한 햇빛이 비치고,
+카메라가 천천히 따라가며,
+감성 영화 같은 분위기<button class="copy" onclick="copyPrompt(this)">복사</button></div></div>
+      <div class="card"><h3>🎬 일반인이 가장 많이 사용하는 표현 모음</h3><h4>💡 조명 표현</h4><ul><li>따뜻한 햇살 느낌</li><li>영화 같은 조명</li><li>노을 감성</li><li>비 오는 밤 분위기</li><li>몽환적인 빛</li><li>네온사인 느낌</li></ul><h4>🎥 카메라 표현</h4><ul><li>카메라가 천천히 다가오는 느낌</li><li>옆에서 따라가는 화면</li><li>드론으로 찍은 느낌</li><li>부드럽게 회전하는 장면</li><li>영화처럼 흔들리는 화면</li></ul><h4>🌫 분위기 표현</h4><ul><li>감성적인 분위기</li><li>영화 같은 느낌</li><li>고급 광고 느낌</li><li>신비롭고 몽환적인 분위기</li><li>따뜻하고 편안한 느낌</li><li>웅장한 느낌</li></ul></div>
+      <div class="card wide"><h3>📌 핵심 정리</h3><p>AI는 아래 4가지를 특히 중요하게 인식합니다.</p><div class="prompt">장면
++
+빛
++
+움직임
++
+감정<button class="copy" onclick="copyPrompt(this)">복사</button></div><p>이 4가지만 자연스럽게 적어도 영상 품질이 훨씬 좋아집니다.</p></div>
+    </div>
+  </section>
+</main>
+
+<script>
+function setTheme(mode){
+  document.body.classList.toggle('spotify', mode === 'spotify');
+  document.getElementById('appleBtn').classList.toggle('active', mode === 'apple');
+  document.getElementById('spotifyBtn').classList.toggle('active', mode === 'spotify');
+}
+function copyPrompt(btn){
+  const text = btn.parentElement.innerText.replace('복사','').replace(/^text\s*/,'').trim();
+  navigator.clipboard.writeText(text).then(()=>{
+    const old = btn.textContent;
+    btn.textContent='완료';
+    setTimeout(()=>btn.textContent=old,900);
+  });
+}
+</script>
+</body>
+</html>
